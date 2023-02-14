@@ -38,7 +38,7 @@ let inputValue = '';
         <p>PASO 4 - Completar la forma abajo</p>
         <p>---</p>
         <input name="client_id" bind:value={inputValue} placeholder="CLIENT_ID" />
-        <a href={`/spotify/step-2/:${inputValue}`}}>SIGUIENTE</a>
+        <a href={`/spotify/:${inputValue}`}}>SIGUIENTE</a>
     </div>
 </section>
 

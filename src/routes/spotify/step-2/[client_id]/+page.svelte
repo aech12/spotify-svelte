@@ -1,9 +1,12 @@
 <script>
 import { env } from '$env/dynamic/public';
-const callback_url = env.PUBLIC_SPOTIFY_CALLBACK_URL || "";
-
 export function load({ params }) {
-  console.log(params.client_id)
+    console.log(params.client_id)
+    return {
+        props: {
+          client_id: params.client_id
+        }
+    };
 }
 </script>
 
@@ -14,7 +17,7 @@ export function load({ params }) {
 
 <section>
     <h1>Spotify</h1>
-    <div></div>
+    <div>{props.client_id}</div>
 </section>
 
 <style>
