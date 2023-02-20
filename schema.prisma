@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model SpotifyClient {
+  id                       Int             @id @default(autoincrement())
+  client_id                String          @unique
+  client_secret            String?
+  base64credentials        String?
+  access_token             String?
+  refresh_token            String?
+  MgidClient               MgidClient?
+  access_token_expire_date DateTime?
+  SpotifyReport            SpotifyReport[]
+}
+
+model MgidClient {
+  id        Int           @id @default(autoincrement())
+  user      SpotifyClient @relation(fields: [client_id], references: [client_id])
+  client_id String        @unique // relation scalar field (used in the `@relation` attribute above)
+}
+
+model SpotifyReport {
+  id                      Int                  @id @default(autoincrement())
+  user                    SpotifyClient        @relation(fields: [client_id], references: [client_id])
+  client_id               String               @unique
+  update_date             DateTime             @default(now())
+  sheets_id               String?              @unique
+  // DIMENSIONS
+  campaign_id             String?              @unique
+  campaign_name           String?
+  campaign_current_status String?
+  // FIELDS
+  SpotifyReportFields     SpotifyReportFields?
+}
+
+model SpotifyReportFields {
+  id              Int           @id @default(autoincrement())
+  campaign        SpotifyReport @relation(fields: [campaign_id], references: [campaign_id])
+  campaign_id     String        @unique
+  ECPCL           Int?
+  SERVE_REACH     Int?
+  CLICKS          Int?
+  CTR             Int?
+  COMPLETION_RATE Int?
+  SERVE_FREQUENCY Int?
+  IMPRESSIONS     Int?
+}
