@@ -3,6 +3,8 @@
 	import axios from 'axios';
 	export let sheets_id: string | null = null;
 	export let campaign_id: string;
+	
+	let result = ""
 
 	// form variables
 	const linkToSheet_url = `${env.PUBLIC_SERVER_URL}/spotify/link_sheet`;
@@ -17,14 +19,17 @@
 			.then(function (response) {
 				console.log(response);
 				sheets_id = response.data.sheets_id;
+				result = "cargado correctamente"
 			})
 			.catch(function (error) {
+				result = "error"
 				console.log(error);
 			});
 	}
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
+	<p>{result}</p>
 	<input
 		type="text"
 		name="sheets_id_input"

@@ -28,8 +28,8 @@ model MgidClient {
 
 model SpotifyReport {
   id                      Int                  @id @default(autoincrement())
-  user                    SpotifyClient        @relation(fields: [client_id], references: [client_id])
-  client_id               String               @unique
+  user                    SpotifyClient        @relation(fields: [client], references: [client_id])
+  client                  String
   update_date             DateTime             @default(now())
   sheets_id               String?              @unique
   // DIMENSIONS

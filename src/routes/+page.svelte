@@ -11,7 +11,7 @@
 	// 	}
 	// }
 
-	let email: string|null = "";
+	let email: string | null = '';
 	async function getAdminEmail() {
 		const response = await fetch(`${env.PUBLIC_SERVER_URL}/admin/get_email`);
 		const data = await response.json();
@@ -19,6 +19,13 @@
 		email = data.email;
 	}
 	getAdminEmail();
+
+	async function cron() {
+		const response = await fetch(`${env.PUBLIC_SERVER_URL}/spotify/cron`);
+		const data = await response.json();
+		// console.log("email", data)
+		email = data.email;
+	}
 </script>
 
 <svelte:head>
@@ -28,9 +35,10 @@
 
 <section>
 	<h1>Conectar APIs</h1>
+	<p>Mail de cuenta de Google:</p>
 	<p>{email}</p>
-	<!-- <p>Antes de conectar usuarios por Spotify/Mgid, con</p> -->
 	<!-- <button on:click={authGoogle}>Conectar Google</button> -->
+	<button on:click={cron}>Test cron</button>
 	<a href="/spotify"> Conectar spotify API</a>
 	<Clients />
 </section>
