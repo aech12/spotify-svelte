@@ -1,8 +1,38 @@
-<script>
-import { env } from '$env/dynamic/public';
+<script lang="ts">
+	import { env } from '$env/dynamic/public';
+	import { page } from '$app/stores';
+	import axios from 'axios';
+	// import { FormData } from 'formdata-node';
 
-const callback_url = env.PUBLIC_SPOTIFY_CALLBACK_URL || "";
-let inputValue = '';
+	// form variables
+	const getToken_url = `${env.PUBLIC_SERVER_URL}/mgid/get-token`;
+	let email = '';
+	let password = '';
+
+	let error: string | null = null;
+	let submitting = false;
+	// let userCreated: string | null = null;
+
+	async function handleSubmit(e: any) {
+		if (submitting) return;
+		submitting = true;
+		const formData = new FormData(e.target);
+		const json = Object.fromEntries(formData.entries());
+
+		// request for token
+		try {
+			const response = await axios.post(getToken_url, json);
+
+			console.log('RES', response.data);
+			window.location.href = '/';
+		} catch (error) {
+			console.error('There was a problem with the axios request:', error);
+			// console.log('MSJ', error?.message);
+			// error = error?.message || 'error';
+		} finally {
+			submitting = false;
+		}
+	}
 </script>
 
 <svelte:head>
@@ -11,35 +41,21 @@ let inputValue = '';
 </svelte:head>
 
 <section>
-    <h1>Spotify</h1>
-    <div>
-        <h1>Generar token para Spotify</h1>
-        <a href="//developer.spotify.com/documentation/ads-api/quick-start/">
-            https://developer.spotify.com/documentation/ads-api/quick-start/
-        </a>
-        <p>---</p>
-        <p>
-            PASO 1 - Generar "CLIENT_ID" y "SECRET" de la App en Spotify. Se puede
-            encontrar en:
-        </p>
-        <a href="//developer.spotify.com/dashboard/applications">
-            https://developer.spotify.com/dashboard/applications
-        </a>
-        <p>Guia para generarlos</p>
-        <a href="//developer.spotify.com/documentation/General/guides/authorization/app-settings/">
-            https://developer.spotify.com/documentation/
-            General/guides/authorization/app-settings/
-        </a>
-        <p>
-            PASO 2 - Configurar la callback de su app en
-            https://developer.spotify.com/ con la siguiente url: {callback_url}
-        </p>
-        <p>PASO 3 - Aceptar Terminos</p>
-        <p>PASO 4 - Completar la forma abajo</p>
-        <p>---</p>
-        <input name="client_id" bind:value={inputValue} placeholder="CLIENT_ID" />
-        <a href={`/spotify/:${inputValue}`}}>SIGUIENTE</a>
-    </div>
+	<h1>MGID</h1>
+	<div>
+		<form on:submit|preventDefault={handleSubmit}>
+			<p>EMAIL:</p>
+			<input type="text" name="email" bind:value={email} />
+			<p>PASSWORD:</p>
+			<input type="password" name="password" bind:value={password} />
+			<input type="submit" value="SIGUIENTE" />
+		</form>
+		{#if error}
+			<p>
+				{error}
+			</p>
+		{/if}
+	</div>
 </section>
 
 <style>
@@ -49,11 +65,11 @@ let inputValue = '';
 		justify-content: center;
 		align-items: center;
 		/* flex: 0.6; */
-        flex-wrap: wrap;
-        background: "gray";
-        overflow-wrap: break-word; 
-        text-align: "center";
-        word-wrap: break-word;
+		flex-wrap: wrap;
+		background: 'gray';
+		overflow-wrap: break-word;
+		text-align: 'center';
+		word-wrap: break-word;
 	}
 
 	h1 {

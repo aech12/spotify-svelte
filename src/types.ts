@@ -1,6 +1,6 @@
 interface SpotifyReport {
   id: number;
-  client_id: string;
+  client: string;
   update_date: Date;
   sheets_id: string;
   campaign_id: string;
@@ -8,4 +8,12 @@ interface SpotifyReport {
   campaign_current_status: string;
 }
 
-export type { SpotifyReport }
+interface MgidReport {
+  id: number;
+  client: string;
+  update_date: Date;
+  sheets_id: string;
+  campaignId: string;
+}
+
+export type { SpotifyReport, MgidReport }

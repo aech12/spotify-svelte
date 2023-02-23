@@ -38,8 +38,9 @@
 	<p>Mail de cuenta de Google:</p>
 	<p>{email}</p>
 	<!-- <button on:click={authGoogle}>Conectar Google</button> -->
-	<button on:click={cron}>Test cron</button>
+	<!-- <button on:click={cron}>Test cron</button> -->
 	<a href="/spotify"> Conectar spotify API</a>
+	<a href="/mgid"> Conectar mgid API</a>
 	<Clients />
 </section>
 

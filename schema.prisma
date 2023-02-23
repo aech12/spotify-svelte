@@ -8,6 +8,7 @@ datasource db {
   relationMode = "prisma"
 }
 
+// SPOTIFY
 model SpotifyClient {
   id                       Int             @id @default(autoincrement())
   client_id                String          @unique
@@ -15,15 +16,8 @@ model SpotifyClient {
   base64credentials        String?
   access_token             String?
   refresh_token            String?
-  MgidClient               MgidClient?
   access_token_expire_date DateTime?
   SpotifyReport            SpotifyReport[]
-}
-
-model MgidClient {
-  id        Int           @id @default(autoincrement())
-  user      SpotifyClient @relation(fields: [client_id], references: [client_id])
-  client_id String        @unique // relation scalar field (used in the `@relation` attribute above)
 }
 
 model SpotifyReport {
@@ -51,4 +45,42 @@ model SpotifyReportFields {
   COMPLETION_RATE Int?
   SERVE_FREQUENCY Int?
   IMPRESSIONS     Int?
+}
+
+// MGID
+model MgidClient {
+  id                       Int          @id @default(autoincrement())
+  idAuth                   Int          @unique
+  email                    String?
+  password                 String?
+  token                    String?
+  refreshToken             String?
+  access_token_expire_date DateTime?
+  MgidReport               MgidReport[]
+}
+
+model MgidReport {
+  id               Int               @id @default(autoincrement())
+  user             MgidClient        @relation(fields: [client], references: [idAuth])
+  client           Int
+  update_date      DateTime          @default(now())
+  sheets_id        String?           @unique
+  // DIMENSIONS
+  campaignId       String?           @unique
+  // FIELDS
+  MgidReportFields MgidReportFields?
+}
+
+model MgidReportFields {
+  id              Int        @id @default(autoincrement())
+  campaign        MgidReport @relation(fields: [campaignId], references: [campaignId])
+  campaignId      String     @unique
+  impressions     Int?
+  viewability     Int?
+  complete        Int?
+  completion_rate Int?
+  clicks          Int?
+  ctr             Int?
+  spent           Int?
+  cpm             Int?
 }

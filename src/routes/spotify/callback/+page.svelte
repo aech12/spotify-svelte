@@ -7,8 +7,8 @@
 	// form variables
 	const getToken_url = `${env.PUBLIC_SERVER_URL}/spotify/get-token`;
 	const code = $page.url.searchParams.get('code');
-	let client_id = 'ba863013e9a14b8bad5bec7a48cf3a7c';
-	let client_secret = 'f03125c922a0474f882eb2d4a990628d';
+	let client_id = '';
+	let client_secret = '';
 
 	let userCreated: string | null = null;
 

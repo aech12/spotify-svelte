@@ -3,7 +3,7 @@
 
 	const callback_url = env.PUBLIC_SPOTIFY_CALLBACK_URL || '';
 
-	let client_id_value = 'ba863013e9a14b8bad5bec7a48cf3a7c';
+	let client_id_value = '';
 
 	async function handleClick(client_id: string) {
 		window.location.href = `https://accounts.spotify.com/authorize/?client_id=${client_id}&response_type=code&redirect_uri=${callback_url}`;
