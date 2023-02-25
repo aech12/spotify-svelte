@@ -49,32 +49,33 @@ model SpotifyReportFields {
 
 // MGID
 model MgidClient {
-  id                       Int          @id @default(autoincrement())
-  idAuth                   Int          @unique
+  id                       Int                 @id @default(autoincrement())
+  idAuth                   Int                 @unique
   email                    String?
   password                 String?
   token                    String?
   refreshToken             String?
   access_token_expire_date DateTime?
-  MgidReport               MgidReport[]
+  MgidVideoCampaign        MgidVideoCampaign[]
+  MgidCampaign             MgidCampaign[]
 }
 
-model MgidReport {
-  id               Int               @id @default(autoincrement())
-  user             MgidClient        @relation(fields: [client], references: [idAuth])
-  client           Int
-  update_date      DateTime          @default(now())
-  sheets_id        String?           @unique
+model MgidVideoCampaign {
+  id                      Int                      @id @default(autoincrement())
+  user                    MgidClient               @relation(fields: [client], references: [idAuth])
+  client                  Int
+  update_date             DateTime                 @default(now())
+  sheets_id               String?                  @unique
   // DIMENSIONS
-  campaignId       String?           @unique
+  campaignId              String?                  @unique
   // FIELDS
-  MgidReportFields MgidReportFields?
+  MgidVideoCampaignFields MgidVideoCampaignFields?
 }
 
-model MgidReportFields {
-  id              Int        @id @default(autoincrement())
-  campaign        MgidReport @relation(fields: [campaignId], references: [campaignId])
-  campaignId      String     @unique
+model MgidVideoCampaignFields {
+  id              Int               @id @default(autoincrement())
+  campaign        MgidVideoCampaign @relation(fields: [campaignId], references: [campaignId])
+  campaignId      String            @unique
   impressions     Int?
   viewability     Int?
   complete        Int?
@@ -83,4 +84,26 @@ model MgidReportFields {
   ctr             Int?
   spent           Int?
   cpm             Int?
+}
+
+model MgidCampaign {
+  id                 Int                 @id @default(autoincrement())
+  user               MgidClient          @relation(fields: [client], references: [idAuth])
+  client             Int
+  update_date        DateTime            @default(now())
+  sheets_id          String?             @unique
+  // DIMENSIONS
+  campaignId         String?             @unique
+  // FIELDS
+  MgidCampaignFields MgidCampaignFields?
+}
+
+model MgidCampaignFields {
+  id         Int          @id @default(autoincrement())
+  campaign   MgidCampaign @relation(fields: [campaignId], references: [campaignId])
+  campaignId String       @unique
+  imps       Int?
+  clicks     Int?
+  spent      Int?
+  avcpc      Int?
 }

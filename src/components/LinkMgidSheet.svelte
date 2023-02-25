@@ -7,7 +7,7 @@
 	let result = ""
 
 	// form variables
-	const linkToSheet_url = `${env.PUBLIC_SERVER_URL}/mgid/link_sheet`;
+	const linkToSheet_url = `${env.PUBLIC_SERVER_URL}/mgid/link_campaign_sheet`;
 	let sheets_id_input = '';
 
 	async function handleSubmit() {

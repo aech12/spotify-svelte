@@ -6,7 +6,7 @@
 
 	const server_url = env.PUBLIC_SERVER_URL;
 	const spotifyUrl_getUsers = `${server_url}/spotify/get_reports`;
-	const mgidUrl_getUsers = `${server_url}/mgid/get_reports`;
+	const mgidUrl_getUsers = `${server_url}/mgid/get_campaigns`;
 	let data_spotify: null | SpotifyReport[];
 	let data_mgid: null | MgidReport[];
 
@@ -28,7 +28,7 @@
 	}
 
 	async function fetchData() {
-		// getCampaigns(spotifyUrl_getUsers, 'spotify');
+		getCampaigns(spotifyUrl_getUsers, 'spotify');
 		getCampaigns(mgidUrl_getUsers, 'mgid');
 	}
 
