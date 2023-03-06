@@ -10,6 +10,8 @@
 	let client_id = '';
 	let client_secret = '';
 
+	let error_msj: null | string = null;
+
 	let userCreated: string | null = null;
 
 	async function handleSubmit(e: any) {
@@ -24,12 +26,15 @@
 					userCreated = 'Usuario creado exitosamente. Va a ser redireccionado.';
 					setTimeout(() => {
 						window.location.href = '/';
-					}, 3000);
+					}, 1500);
+				} else {
+					error_msj = 'Error creando usuario/tokens';
 				}
 			})
 			.catch(function (error) {
 				console.log(error);
 				userCreated = 'Error creando usuario';
+				error_msj = error.message;
 				setTimeout(() => {
 					userCreated = null;
 				}, 3000);
@@ -64,6 +69,10 @@
 			<input type="submit" value="SIGUIENTE" />
 		</form>
 	</div>
+	{#if error_msj}
+		<p>{error_msj}</p>
+		<p>Por favor, empezar desde paso 1</p>
+	{/if}
 	{#if userCreated}
 		<p>
 			{userCreated}

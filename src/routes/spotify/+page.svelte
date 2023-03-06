@@ -35,7 +35,9 @@
 			PASO 2 - Configurar la "redirect uri" de su app en https://developer.spotify.com/ con la
 			siguiente url: {callback_url}
 		</p>
-		<p>PASO 3 - Aceptar Terminos</p>
+		<p>PASO 3 - Aceptar Terminos en </p><a href="https://adstudio.spotify.com/api-terms">
+			https://adstudio.spotify.com/api-terms
+		</a>
 		<p>PASO 4 - Completar la forma abajo</p>
 		<p>---</p>
 		<input name="client_id" bind:value={client_id_value} placeholder="CLIENT_ID" />

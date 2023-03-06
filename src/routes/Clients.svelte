@@ -24,6 +24,10 @@
 				default:
 					break;
 			}
+		} else {
+			console.log('Error:', res);
+			// data_spotify = 'error';
+			// data_mgid = 'error';
 		}
 	}
 
@@ -33,12 +37,19 @@
 	}
 
 	fetchData();
+
+	function handleLiDelete(index: string | number, type: 'mgid' | 'spotify') {
+		if (type === 'spotify' && data_spotify)
+			data_spotify = data_spotify.filter((item) => item.id !== index);
+		if (type === 'mgid' && data_mgid)
+			data_mgid = data_mgid.filter((item) => item.campaignId !== index);
+	}
 </script>
 
 <section>
 	<button on:click={fetchData} class="refresh_button">Refrescar data</button>
-	<ClientsSpotify data={data_spotify} title="Clientes Spotify" />
-	<ClientsMgid data={data_mgid} title="Clientes Mgid" />
+	<ClientsSpotify data={data_spotify} title="Clientes Spotify" onlidelete={handleLiDelete} />
+	<ClientsMgid data={data_mgid} title="Clientes Mgid" onlidelete={handleLiDelete} />
 </section>
 
 <style>
